@@ -1,0 +1,17 @@
+server:
+  port: 8070
+
+spring:
+  application:
+    name: periodic-table
+  datasource:
+    url: jdbc:postgresql://localhost:5432/db_periodic_table
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+    show-sql: true
+
