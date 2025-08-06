@@ -7,6 +7,7 @@ import com.divyalin.periodic_table.repository.ElementRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,7 @@ public class ElementServiceImpl implements ElementService {
     public List<ElementResponse> getAllElements() {
         return repository.findAll().stream()
                 .map(e -> new ElementResponse(e.getName(), e.getAtomicNumber()))
+                .sorted(Comparator.comparingInt(ElementResponse::getAtomicNumber))
                 .collect(Collectors.toList());
     }
 
