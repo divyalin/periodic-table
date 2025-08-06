@@ -49,14 +49,11 @@ public class ElementServiceImpl implements ElementService {
         Element element = repository.findById(atomicNumber)
                 .orElseThrow(() -> new ElementNotFoundException("Element with atomic number " + atomicNumber + " not found"));
 
-        String dbAltName = element.getAlternativeName();
-        String dbAltNames = element.getAlternativeNames();
-
         return new ElementResponse(
                 element.getName(),
                 element.getAtomicNumber(),
-                dbAltName,
-                dbAltNames
+                element.getAlternativeName(),
+                element.getAlternativeNames()
         );
     }
 
@@ -68,14 +65,14 @@ public class ElementServiceImpl implements ElementService {
      * </p>
      */
     public List<ElementResponse> getElementsByGroup(int groupNumber) {
-        String queryPattern = "group " + groupNumber;
-        List<Element> elementGroup = repository.findByGroupNumber(queryPattern);
+        List<Element> elementGroup = repository.findByGroupNumber("group " + groupNumber);
 
         if (elementGroup.isEmpty()) {
             throw new ElementNotFoundException("No elements found for group " + groupNumber);
         }
 
         return elementGroup.stream().map(e -> new ElementResponse(e.getName(), e.getAtomicNumber()))
+                .sorted(Comparator.comparingInt(ElementResponse::getAtomicNumber))
                 .collect(Collectors.toList());
     }
 }
