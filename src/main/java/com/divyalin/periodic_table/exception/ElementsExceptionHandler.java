@@ -38,6 +38,7 @@ public class ElementsExceptionHandler {
 
     /**
      * Exception handler for type ConstraintViolationException
+     * 
      * <p>
      * Anytime a constraint is violated while adding or retrieving data
      * from the database, this exception is thrown.
