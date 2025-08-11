@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -103,7 +104,7 @@ class ElementControllerTest {
 
         mockMvc.perform(get(BASE_URL + "/" + ATOMIC_NUMBER_1))
                 .andExpect(status().isNotFound())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString(errorMessage)));
+                .andExpect(content().string(containsString(errorMessage)));
     }
 
     /**
@@ -151,7 +152,7 @@ class ElementControllerTest {
     void testGetElementsByGroup_failsValidationForGroupNumberBelowMin() throws Exception {
         mockMvc.perform(get(BASE_URL + "/group/0"))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("Group number must be at least 1.")));
+                .andExpect(content().string(containsString("Group number must be at least 1.")));
     }
 
     /**
@@ -165,7 +166,7 @@ class ElementControllerTest {
     void testGetElementsByGroup_failsValidationForGroupNumberAboveMax() throws Exception {
         mockMvc.perform(get(BASE_URL + "/group/19"))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("Group number must be at most 18.")));
+                .andExpect(content().string(containsString("Group number must be at most 18.")));
     }
 
     /**
